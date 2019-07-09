@@ -1,0 +1,17 @@
+{
+  "name": "rgg-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Dajiege/rg-cli.git",
+  "author": "linzhijie <5175248@qq.com>",
+  "license": "MIT",
+  "bin": {
+    "rg-build": "./bin/rg-build.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "download-git-repo": "^2.0.0",
+    "ora": "^3.4.0"
+  }
+}
