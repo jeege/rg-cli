@@ -6,7 +6,7 @@
   "author": "linzhijie <5175248@qq.com>",
   "license": "MIT",
   "bin": {
-    "rg-build": "./bin/rg-build.js"
+    "rgg-cli": "./bin/rg-build.js"
   },
   "dependencies": {
     "chalk": "^2.4.2",
