@@ -7,5 +7,7 @@ yarn add global rgg-cli
 
 #### 生成项目
 <pre>
+<code>
 rgg-cli i <name>
+</code>
 </pre>

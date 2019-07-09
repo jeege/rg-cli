@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 const program = require('commander')  //可以解析用户输入的命令
 const inquirer = require('inquirer')   //对话交互
 const { exec, spawn } = require('child_process');
