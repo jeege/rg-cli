@@ -1,58 +1,57 @@
 #! /usr/bin/env node
 
 const program = require('commander')  //可以解析用户输入的命令
-const download = require('download-git-repo') //拉取github上的文件
-const chalk = require('chalk')  //改变输出文字的颜色
-const ora = require('ora')  //小图标（loading、succeed、warn等）
-const inquirer = require('inquirer')
+const inquirer = require('inquirer')   //对话交互
+const { exec, spawn } = require('child_process');
+
+const { down, checkDir, nuxt, vue, react } = require('../lib')
 
 program
-  .version('0.0.1')
-  .option('-i, init [name]', '初始化rg-build项目')
-  .parse(process.argv)
+  .version('0.1.0')
 
-const promptList = [{
-  type: 'rawlist',
-  message: '请选择一种框架:',
-  name: 'kj',
-  choices: [
-    "nuxt",
-    "vue",
-    "react"
-  ]
-}];
-
-if (program.init) {
-
-  init().then(answers => {
-    switch (answers.kj) {
-      case 'nuxt':
-        down('Dajiege/send_email')
-        break;
-      case 'vue':
-        down('Dajiege/cc')
-        break;
-      case 'react':
-        down('Dajiege/ee')
-        break;
-      default: 
-        down('Dajiege/dd')
-    }
+program
+  .command('init <name>')
+  .alias('i')
+  .description('创建一个rgg-build项目')
+  .action(async (name, cmd) => {
+    await checkDir(name)
+    init().then(answers => {
+      switch (answers.kj) {
+        case 'nuxt':
+          nuxt(name)
+          break;
+        case 'vue':
+          vue(name)
+          break;
+        case 'react':
+          react(name)
+          break;
+        case 'template':
+          inquirer.prompt([{
+            type: 'input',
+            message: '请输入模板路径：',
+            name: 'path',
+            default: 'Dajiege/send_email'
+          }]).then(res => {
+            down(res.path, name)
+          })
+          break;
+      }
+    })
   })
-}
 
-function down(path) {
-  const spinner = ora('正在从github下载rg-build...').start();
-  download(path, program.init, function (err) {
-    if (!err) {
-      spinner.succeed('下载成功')
-    } else {
-      console.info('\n' + chalk.red(err))
-      spinner.fail('下载失败')
-    }
-  })
-}
+program.parse(process.argv);
 
 function init() {
-  return inquirer.prompt(promptList)
+  return inquirer.prompt([{
+    type: 'list',
+    message: '请选择一种框架:',
+    name: 'kj',
+    choices: [
+      "nuxt",
+      "vue",
+      "react",
+      "template"
+    ]
+  }])
 }
