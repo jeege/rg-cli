@@ -4,4 +4,4 @@
 <pre>yarn add global rgg-cli</pre>
 
 #### 生成项目
-<pre>rgg-cli i <name></pre>
+<pre>rgg-cli i [name]</pre>
